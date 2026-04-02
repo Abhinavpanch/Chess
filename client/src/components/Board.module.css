@@ -1,0 +1,21 @@
+.board {
+  display: grid;
+  grid-template-columns: repeat(8, 1fr);
+  grid-template-rows: repeat(8, 1fr);
+  width: min(68vw, 560px);
+  height: min(68vw, 560px);
+  border: 3px solid #3a3530;
+  border-radius: 3px;
+  overflow: hidden;
+  box-shadow:
+    0 0 0 1px #555,
+    0 12px 48px rgba(0,0,0,0.7),
+    0 4px 16px rgba(0,0,0,0.4);
+}
+
+@media (max-width: 768px) {
+  .board {
+    width: min(95vw, 400px);
+    height: min(95vw, 400px);
+  }
+}

@@ -1,0 +1,188 @@
+.sidebar {
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+  width: 220px;
+  min-width: 200px;
+}
+
+.panel {
+  background: var(--bg-card);
+  border: 1px solid var(--border);
+  border-radius: 10px;
+  padding: 12px 14px;
+}
+
+.panelLabel {
+  font-size: 10px;
+  font-weight: 600;
+  text-transform: uppercase;
+  letter-spacing: 1px;
+  color: var(--text-muted);
+  margin-bottom: 8px;
+}
+
+/* Status */
+.statusPanel { padding: 12px; }
+
+.statusBadge {
+  text-align: center;
+  padding: 8px 12px;
+  border-radius: 6px;
+  font-size: 13px;
+  font-weight: 500;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 6px;
+}
+.whiteTurn { background: #c8b98a18; color: var(--gold); border: 1px solid #c8b98a33; }
+.blackTurn { background: #55555518; color: #bbb;        border: 1px solid #55555533; }
+.gameOver  { background: #8e44ad18; color: #a855f7;     border: 1px solid #8e44ad33; }
+.draw      { background: #5b8dd918; color: var(--blue);  border: 1px solid #5b8dd933; }
+
+.gameOverIcon { font-size: 14px; }
+.checkIcon    { font-size: 14px; color: var(--red); }
+
+.gameId {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  margin-top: 8px;
+  padding-top: 8px;
+  border-top: 1px solid var(--border);
+}
+.gameIdLabel { font-size: 10px; color: var(--text-muted); }
+.gameIdCode  { font-size: 12px; font-family: 'DM Mono', monospace; color: var(--gold-dim); }
+
+/* Segmented control */
+.segmented {
+  display: flex;
+  gap: 4px;
+  background: var(--bg-secondary);
+  border: 1px solid var(--border);
+  border-radius: 6px;
+  padding: 3px;
+}
+.segBtn {
+  flex: 1;
+  padding: 5px 4px;
+  border-radius: 4px;
+  font-size: 11px;
+  font-weight: 500;
+  background: transparent;
+  color: var(--text-muted);
+  transition: background 0.12s, color 0.12s;
+  white-space: nowrap;
+}
+.segBtn:hover { color: var(--text-secondary); }
+.segActive    { background: var(--bg-card) !important; color: var(--gold) !important; }
+
+.subLabel {
+  font-size: 10px;
+  font-weight: 600;
+  text-transform: uppercase;
+  letter-spacing: 1px;
+  color: var(--text-muted);
+  margin: 8px 0 4px;
+}
+
+/* Side selector (Play as White / Black) */
+.sideRow {
+  display: flex;
+  gap: 6px;
+  margin-top: 0;
+}
+
+.sideBtn {
+  flex: 1;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 6px;
+  padding: 8px 6px;
+  border-radius: 6px;
+  font-size: 12px;
+  font-weight: 500;
+  background: var(--bg-secondary);
+  border: 1px solid var(--border);
+  color: var(--text-muted);
+  transition: all 0.12s;
+}
+.sideBtn:hover { border-color: var(--border-light); color: var(--text-secondary); }
+.sideBtnActive { background: var(--bg-card-hover); border-color: var(--gold-dim) !important; color: var(--gold) !important; }
+
+.sidePiece { font-size: 18px; line-height: 1; }
+
+/* Pause / Resume buttons */
+.btnPause {
+  background: #e0905022;
+  color: #e09050;
+  border: 1px solid #e0905044;
+}
+.btnPause:hover { background: #e0905033; }
+
+.btnResume {
+  background: #4caf7622;
+  color: #4caf76;
+  border: 1px solid #4caf7644;
+}
+.btnResume:hover { background: #4caf7633; }
+
+/* Paused status */
+.pausedStatus {
+  background: #e0905018;
+  color: #e09050;
+  border: 1px solid #e0905044;
+}
+
+.pauseIcon { font-size: 13px; }
+
+.diffRow {             
+  display: flex;
+  gap: 4px;
+  margin-top: 8px;
+}
+.diffBtn {
+  flex: 1;
+  padding: 4px;
+  border-radius: 4px;
+  font-size: 10px;
+  font-weight: 500;
+  background: transparent;
+  border: 1px solid var(--border);
+  color: var(--text-muted);
+  transition: all 0.12s;
+}
+.diffBtn:hover   { border-color: var(--border-light); color: var(--text-secondary); }
+.diffActive      { background: var(--bg-card-hover); border-color: var(--gold-dim); color: var(--gold-dim); }
+
+/* Actions */
+.actions {
+  display: flex;
+  flex-direction: column;
+  gap: 6px;
+}
+
+.btn {
+  width: 100%;
+  padding: 9px 12px;
+  border-radius: 6px;
+  font-size: 13px;
+  font-weight: 500;
+  transition: background 0.12s, transform 0.08s;
+}
+.btn:active { transform: scale(0.98); }
+
+.btnPrimary {
+  background: var(--gold);
+  color: #1a1a1a;
+}
+.btnPrimary:hover { background: var(--gold-light); }
+
+.btnSecondary {
+  background: var(--bg-secondary);
+  color: var(--text-secondary);
+  border: 1px solid var(--border);
+}
+.btnSecondary:hover { background: var(--bg-card-hover); color: var(--text-primary); }

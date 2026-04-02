@@ -1,0 +1,126 @@
+.app {
+  display: flex;
+  flex-direction: column;
+  min-height: 100vh;
+  background: var(--bg-primary);
+}
+
+.header {
+  display: flex;
+  align-items: center;
+  padding: 12px 24px;
+  border-bottom: 1px solid var(--border);
+  background: var(--bg-secondary);
+}
+
+.logo {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+}
+
+.logoIcon {
+  font-size: 24px;
+  color: var(--gold);
+  line-height: 1;
+}
+
+.logoText {
+  font-family: 'Playfair Display', serif;
+  font-size: 20px;
+  font-weight: 700;
+  color: var(--text-primary);
+  letter-spacing: 0.5px;
+}
+
+.main {
+  flex: 1;
+  display: flex;
+  align-items: flex-start;
+  justify-content: center;
+  gap: 24px;
+  padding: 24px;
+}
+
+.gameArea {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 8px;
+}
+
+.boardWrapper {
+  position: relative;
+}
+
+.pauseOverlay {
+  position: absolute;
+  inset: 0;
+  background: rgba(0, 0, 0, 0.62);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  border-radius: 3px;
+  z-index: 10;
+  backdrop-filter: blur(3px);
+}
+
+.pauseCard {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 10px;
+  background: var(--bg-card);
+  border: 1px solid var(--border-light);
+  border-radius: 14px;
+  padding: 28px 36px;
+  box-shadow: 0 12px 40px rgba(0,0,0,0.7);
+  animation: popIn 0.18s ease-out;
+}
+
+@keyframes popIn {
+  from { transform: scale(0.88); opacity: 0; }
+  to   { transform: scale(1);    opacity: 1; }
+}
+
+.pauseBigIcon {
+  font-size: 40px;
+  line-height: 1;
+  color: #e09050;
+}
+
+.pauseText {
+  font-family: 'Playfair Display', serif;
+  font-size: 20px;
+  font-weight: 700;
+  color: var(--gold);
+}
+
+.pauseResumeBtn {
+  margin-top: 4px;
+  padding: 9px 24px;
+  background: #4caf7622;
+  color: #4caf76;
+  border: 1px solid #4caf7655;
+  border-radius: 7px;
+  font-size: 14px;
+  font-weight: 600;
+  cursor: pointer;
+  transition: background 0.12s, transform 0.08s;
+}
+.pauseResumeBtn:hover  { background: #4caf7633; }
+.pauseResumeBtn:active { transform: scale(0.97); }
+
+@media (max-width: 768px) {
+  .main {
+    flex-direction: column;
+    align-items: center;
+    padding: 12px;
+    gap: 12px;
+  }
+
+  .sidebar {
+    width: 100%;
+    max-width: min(95vw, 400px);
+  }
+}
