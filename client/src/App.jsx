@@ -23,10 +23,14 @@ export default function App() {
     paused,
     humanSide,
     notification,
+    joinInput,
+    setJoinInput,
+    joining,
     selectSquare,
     confirmPromotion,
     newGame,
     undoMove,
+    joinGame,
     togglePause,
     createGame,
     setModeAndRestart,
@@ -141,6 +145,10 @@ export default function App() {
           difficulty={difficulty}
           aiSide={aiSide}
           paused={paused}
+          gameId={gameId}
+          joinInput={joinInput}
+          setJoinInput={setJoinInput}
+          joining={joining}
           onNewGame={newGame}
           onUndo={undoMove}
           onFlip={() => setFlipped(f => !f)}
@@ -148,7 +156,7 @@ export default function App() {
           onSetMode={setModeAndRestart}
           onSetDifficulty={setDifficultyAndRestart}
           onSetAiSide={setAiSideAndRestart}
-          gameId={gameId}
+          onJoinGame={joinGame}
         />
       </main>
 

@@ -2,6 +2,10 @@
 import { useState, useCallback } from 'react';
 import { useSocket } from './useSocket';
 
+const SERVER = typeof window !== 'undefined' && window.location.hostname !== 'localhost'
+  ? 'https://stunning-nourishment-production-5004.up.railway.app'
+  : '';
+
 export function useGame() {
   const [gameId, setGameId] = useState(null);
   const [gameData, setGameData] = useState(null);
@@ -14,10 +18,12 @@ export function useGame() {
   const [aiSide, setAiSide] = useState('b');
   const [paused, setPaused] = useState(false);
   const [notification, setNotification] = useState(null);
+  const [joinInput, setJoinInput] = useState('');
+  const [joining, setJoining] = useState(false);
 
   const notify = (msg, type = 'info') => {
     setNotification({ msg, type });
-    setTimeout(() => setNotification(null), 3000);
+    setTimeout(() => setNotification(null), 3500);
   };
 
   const { emit } = useSocket(gameId, {
@@ -55,22 +61,21 @@ export function useGame() {
     setAiSide(s);
     setPaused(false);
 
-const SERVER = window.location.hostname !== 'localhost'
-  ? 'https://stunning-nourishment-production-5004.up.railway.app'
-  : '';
+    const SERVER = window.location.hostname !== 'localhost'
+      ? 'https://stunning-nourishment-production-5004.up.railway.app'
+      : '';
 
-const res = await fetch(`${SERVER}/api/games`, {
-  method: 'POST',
-  headers: { 'Content-Type': 'application/json' },
-  body: JSON.stringify({ mode: m, difficulty: d, aiSide: s }),
-});
+    const res = await fetch(`${SERVER}/api/games`, {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify({ mode: m, difficulty: d, aiSide: s }),
+    });
     const { gameId: id } = await res.json();
     setGameId(id);
     setSelectedSquare(null);
     setLegalMoves([]);
     setPendingPromotion(null);
 
-    // Player always plays opposite of AI
     const playerSide = m === 'ai' ? (s === 'b' ? 'w' : 'b') : 'w';
     setTimeout(() => {
       emit('joinGame', { gameId: id, preferColor: playerSide });
@@ -79,6 +84,46 @@ const res = await fetch(`${SERVER}/api/games`, {
     return id;
   }, [mode, difficulty, aiSide, emit]);
 
+  // Join an existing game by Room ID
+  const joinGame = useCallback(async (roomInput) => {
+    const raw = roomInput.trim().toUpperCase();
+    if (!raw || raw.length < 8) {
+      notify('Enter a valid Room ID', 'error');
+      return;
+    }
+
+    setJoining(true);
+
+    const SERVER = window.location.hostname !== 'localhost'
+      ? 'https://stunning-nourishment-production-5004.up.railway.app'
+      : '';
+
+    // Find the full game ID that starts with this prefix
+    try {
+      const res = await fetch(`${SERVER}/api/games/find/${raw}`);
+      if (!res.ok) {
+        notify('Room not found! Check the ID and try again.', 'error');
+        setJoining(false);
+        return;
+      }
+      const { gameId: id } = await res.json();
+      setGameId(id);
+      setMode('online');
+      setSelectedSquare(null);
+      setLegalMoves([]);
+      setPendingPromotion(null);
+      setPaused(false);
+
+      setTimeout(() => {
+        emit('joinGame', { gameId: id, preferColor: 'b' });
+        notify('Joined game! You are playing as Black.', 'success');
+      }, 100);
+    } catch {
+      notify('Could not connect. Try again.', 'error');
+    }
+    setJoining(false);
+  }, [emit]);
+
   const humanSide = mode === 'ai' ? (aiSide === 'b' ? 'w' : 'b') : null;
 
   const selectSquare = useCallback((row, col) => {
@@ -86,7 +131,6 @@ const res = await fetch(`${SERVER}/api/games`, {
     if (paused) { notify('Game is paused', 'warning'); return; }
     const { state } = gameData;
 
-    // Block clicks on AI's turn
     if (mode === 'ai' && state.turn === aiSide) return;
 
     if (selectedSquare) {
@@ -167,7 +211,8 @@ const res = await fetch(`${SERVER}/api/games`, {
   return {
     gameData, gameId, playerColor, selectedSquare, legalMoves,
     pendingPromotion, mode, difficulty, aiSide, paused, humanSide,
-    notification, selectSquare, confirmPromotion, newGame, undoMove,
+    notification, joinInput, setJoinInput, joining,
+    selectSquare, confirmPromotion, newGame, undoMove, joinGame,
     togglePause, createGame, setModeAndRestart, setDifficultyAndRestart, setAiSideAndRestart,
   };
 }

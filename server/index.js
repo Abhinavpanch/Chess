@@ -4,7 +4,7 @@ const express = require('express');
 const http = require('http');
 const { Server } = require('socket.io');
 const cors = require('cors');
-// const path = require('path');
+const path = require('path');
 const { v4: uuidv4 } = require('uuid');
 const {
   createInitialState,
@@ -21,18 +21,19 @@ const io = new Server(server, {
   cors: {
     origin: process.env.CLIENT_URL || 'http://localhost:5173',
     methods: ['GET', 'POST'],
-    credentials: true,
   },
-  transports: ['polling', 'websocket'],
-  allowEIO3: true,
 });
 
-app.use(cors({
-  origin: process.env.CLIENT_URL || 'http://localhost:5173',
-  credentials: true,
-}));
+app.use(cors());
 app.use(express.json());
 
+// Serve built client in production
+if (process.env.NODE_ENV === 'production') {
+  app.use(express.static(path.join(__dirname, '../client/dist')));
+  app.get('*', (req, res) =>
+    res.sendFile(path.join(__dirname, '../client/dist/index.html'))
+  );
+}
 
 // ─── In-memory game store ───────────────────────────────────────────────────
 // games: { [gameId]: { state, players: {w, b}, mode, difficulty, timers, timerInterval } }
@@ -63,6 +64,14 @@ app.get('/api/games/:gameId', (req, res) => {
   const game = games[req.params.gameId];
   if (!game) return res.status(404).json({ error: 'Game not found' });
   res.json(publicState(game));
+});
+
+// Find game by 8-char Room ID prefix
+app.get('/api/games/find/:prefix', (req, res) => {
+  const prefix = req.params.prefix.toLowerCase();
+  const match = Object.keys(games).find(id => id.toLowerCase().startsWith(prefix));
+  if (!match) return res.status(404).json({ error: 'Room not found' });
+  res.json({ gameId: match });
 });
 
 // ─── Socket.io ──────────────────────────────────────────────────────────────
