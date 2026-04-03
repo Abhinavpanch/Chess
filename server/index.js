@@ -4,7 +4,7 @@ const express = require('express');
 const http = require('http');
 const { Server } = require('socket.io');
 const cors = require('cors');
-const path = require('path');
+// const path = require('path');
 const { v4: uuidv4 } = require('uuid');
 const {
   createInitialState,
