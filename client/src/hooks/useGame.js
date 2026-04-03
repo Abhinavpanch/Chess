@@ -55,11 +55,15 @@ export function useGame() {
     setAiSide(s);
     setPaused(false);
 
-    const res = await fetch('/api/games', {
-      method: 'POST',
-      headers: { 'Content-Type': 'application/json' },
-      body: JSON.stringify({ mode: m, difficulty: d, aiSide: s }),
-    });
+const SERVER = window.location.hostname !== 'localhost'
+  ? 'https://stunning-nourishment-production-5004.up.railway.app'
+  : '';
+
+const res = await fetch(`${SERVER}/api/games`, {
+  method: 'POST',
+  headers: { 'Content-Type': 'application/json' },
+  body: JSON.stringify({ mode: m, difficulty: d, aiSide: s }),
+});
     const { gameId: id } = await res.json();
     setGameId(id);
     setSelectedSquare(null);
