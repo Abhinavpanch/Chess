@@ -25,33 +25,35 @@ export default function Board({
     : Array.from({ length: 8 }, (_, i) => i);
 
   return (
-    <div className={styles.board}>
-      {rows.map(row =>
-        cols.map(col => {
-          const piece = board[row][col];
-          const isSelected = selectedSquare?.[0] === row && selectedSquare?.[1] === col;
-          const isLegalTarget = legalSet.has(`${row},${col}`);
-          const isLastMoveFrom = lastMove?.from?.[0] === row && lastMove?.from?.[1] === col;
-          const isLastMoveTo = lastMove?.to?.[0] === row && lastMove?.to?.[1] === col;
-          const isCheck = piece === turn + 'K' && false; // passed from parent
+    <div className={styles.boardOuter}>
+      <div className={styles.board}>
+        {rows.map(row =>
+          cols.map(col => {
+            const piece = board[row][col];
+            const isSelected = selectedSquare?.[0] === row && selectedSquare?.[1] === col;
+            const isLegalTarget = legalSet.has(`${row},${col}`);
+            const isLastMoveFrom = lastMove?.from?.[0] === row && lastMove?.from?.[1] === col;
+            const isLastMoveTo = lastMove?.to?.[0] === row && lastMove?.to?.[1] === col;
+            const isCheck = piece === turn + 'K' && false;
 
-          return (
-            <Square
-              key={`${row}-${col}`}
-              row={row}
-              col={col}
-              piece={piece}
-              isSelected={isSelected}
-              isLastMoveFrom={isLastMoveFrom}
-              isLastMoveTo={isLastMoveTo}
-              isLegalTarget={isLegalTarget}
-              isCheck={isCheck}
-              flipped={flipped}
-              onClick={() => onSquareClick(row, col)}
-            />
-          );
-        })
-      )}
+            return (
+              <Square
+                key={`${row}-${col}`}
+                row={row}
+                col={col}
+                piece={piece}
+                isSelected={isSelected}
+                isLastMoveFrom={isLastMoveFrom}
+                isLastMoveTo={isLastMoveTo}
+                isLegalTarget={isLegalTarget}
+                isCheck={isCheck}
+                flipped={flipped}
+                onClick={() => onSquareClick(row, col)}
+              />
+            );
+          })
+        )}
+      </div>
     </div>
   );
 }

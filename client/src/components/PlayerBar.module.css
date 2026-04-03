@@ -6,11 +6,11 @@
   background: var(--bg-card);
   border: 1px solid var(--border);
   border-radius: 6px;
-  width: min(68vw, 560px);
+  width: min(62vw + 36px, 556px);
 }
 
-@media (max-width: 768px) {
-  .bar { width: min(95vw, 400px); }
+@media (max-width: 900px) {
+  .bar { width: min(88vw + 24px, 424px); }
 }
 
 .avatar {

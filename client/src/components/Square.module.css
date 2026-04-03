@@ -10,13 +10,13 @@
   transition: background 0.08s;
 }
 
-.light { background: #f0d9b5; }
-.dark  { background: #b58863; }
+.light { background: #8ca2ad; }
+.dark  { background: #4a6741; }
 
-.selected  { background: rgba(246, 246, 105, 0.88) !important; }
-.lastMove  { background: rgba(205, 210, 106, 0.72) !important; }
-.check     { background: rgba(220, 40, 40, 0.65) !important; }
-.captureRing { background: rgba(210, 30, 30, 0.35) !important; }
+.selected  { background: rgba(246, 246, 105, 0.80) !important; }
+.lastMove  { background: rgba(205, 210, 106, 0.65) !important; }
+.check     { background: rgba(220, 40, 40, 0.70) !important; }
+.captureRing { background: rgba(210, 30, 30, 0.30) !important; }
 
 .pieceWrapper {
   width: 82%;
@@ -70,5 +70,5 @@
   line-height: 1;
   z-index: 3;
 }
-.coordOnLight { color: #b58863; }
-.coordOnDark  { color: #f0d9b5; }
+.coordOnLight { color: #4a6741; }
+.coordOnDark  { color: #8ca2ad; }
