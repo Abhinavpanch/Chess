@@ -2,8 +2,7 @@
 import { useEffect, useRef, useCallback } from 'react';
 import { io } from 'socket.io-client';
 
-const SOCKET_URL = import.meta.env.VITE_SERVER_URL || '';
-
+const SOCKET_URL = import.meta.env.VITE_SERVER_URL || 'http://localhost:3001';
 export function useSocket(gameId, handlers) {
   const socketRef = useRef(null);
   const handlersRef = useRef(handlers);
