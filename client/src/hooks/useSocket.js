@@ -2,8 +2,10 @@
 import { useEffect, useRef, useCallback } from 'react';
 import { io } from 'socket.io-client';
 
-const SOCKET_URL = import.meta.env.VITE_SERVER_URL || 'http://localhost:3001';
-export function useSocket(gameId, handlers) {
+const SOCKET_URL = typeof window !== 'undefined' && window.location.hostname !== 'localhost'
+  ? 'https://stunning-nourishment-production-5004.up.railway.app'
+  : 'http://localhost:3001';
+  export function useSocket(gameId, handlers) {
   const socketRef = useRef(null);
   const handlersRef = useRef(handlers);
   handlersRef.current = handlers;
